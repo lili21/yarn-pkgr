@@ -13,6 +13,8 @@ $ npm install -g @napos/yarn-pkgr
 $ yarn-pkgr
 ```
 
-1. hash
-2. 判断文件夹是否存在
-3. 存在 ？ link : （安装然后link)
+Todo List
+---------
+
+* 移除过时的缓存（一个月前）
+* 参数处理
