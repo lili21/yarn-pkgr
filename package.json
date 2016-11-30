@@ -25,5 +25,6 @@
   },
   "engines": {
     "node": "^5.12.0"
-  }
+  },
+  "preferGlobal": true
 }
