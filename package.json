@@ -1,6 +1,6 @@
 {
   "name": "yarn-pkgr",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "cache `yarn install` results",
   "main": "index.js",
   "bin": {
