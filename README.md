@@ -1,9 +1,11 @@
 yarn-pkgr
 ==========
-> A Napos Front-End Project
+> inspired by [npm-pkgr](https://github.com/vvo/npm-pkgr)
 
+Just like [npm-pkgr](https://github.com/vvo/npm-pkgr), but for [yarn](https://yarnpkg.com/)
 
-like [npm-pkgr](https://github.com/vvo/npm-pkgr), but for [yarn](https://github.com/yarnpkg/yarn).
+`yarn-pkgr` caches `yarn install` results.
+If your package.json did not change from last build, then you will immediately get a symlink `node_modules`.
 
 Usage
 -----
@@ -16,5 +18,5 @@ $ yarn-pkgr
 Todo List
 ---------
 
-* 移除过时的缓存（一个月前）
-* 参数处理
+* remove cache (one month ago)
+* accept args
