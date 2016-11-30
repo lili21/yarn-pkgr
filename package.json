@@ -1,6 +1,6 @@
 {
   "name": "@napos/yarn-pkgr",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A Napos Front-End Project",
   "main": "index.js",
   "bin": {
