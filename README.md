@@ -11,12 +11,12 @@ Usage
 -----
 
 ```
-$ npm install -g @napos/yarn-pkgr
+$ npm install -g yarn-pkgr
 $ yarn-pkgr
 ```
 
 Todo List
 ---------
 
-* remove cache (one month ago)
+* remove outdated cache
 * accept args
