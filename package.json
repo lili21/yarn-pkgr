@@ -1,0 +1,26 @@
+{
+  "name": "@napos/yarn-pkgr",
+  "version": "0.0.1",
+  "description": "A Napos Front-End Project",
+  "main": "index.js",
+  "bin": {
+    "yarn-pkgr": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.elenet.me:li.li/yarn-pkgr.git"
+  },
+  "devDependencies": {
+    "eslint": "^2.4.0",
+    "eslint-config-standard": "^5.3.1",
+    "eslint-plugin-promise": "^1.3.2",
+    "eslint-plugin-standard": "^1.3.2"
+  },
+  "author": "Napos-FE",
+  "liscense": "MIT",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.5.4"
+  }
+}
