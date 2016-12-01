@@ -51,6 +51,7 @@ mkdirp(yarnPkgrCache)
   })
 })
 .catch(e => {
+  require('rimraf').sync(cachedir)
   console.error(e)
   console.log()
   console.error('An error occured while `yarn-pkgr` ran')
