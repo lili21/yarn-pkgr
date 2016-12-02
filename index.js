@@ -14,7 +14,7 @@ const mkdirp = Promise.promisify(require('mkdirp'))
 const access = Promise.promisify(require('fs').access)
 
 const cwd = process.cwd()
-const yarnPkgrCache = path.join(process.env.HOME, '.npm-pkgr')
+const yarnPkgrCache = path.join(process.env.HOME, '.yarn-pkgr')
 
 var cachedir
 var cachelock
@@ -30,7 +30,6 @@ mkdirp(yarnPkgrCache)
   return computeHash(cwd)
 })
 .then(hash => {
-  console.log(hash)
   cachedir = path.join(yarnPkgrCache, hash)
   cachelock = path.join(yarnPkgrCache, hash + '.lock')
   return lock(cachelock, lockopts).then(() => {

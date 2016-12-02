@@ -1,5 +1,5 @@
 {
-  "name": "@napos/yarn-pkgr",
+  "name": "yarn-pkgr",
   "version": "0.1.7",
   "description": "cache `yarn install` results",
   "main": "index.js",
