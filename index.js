@@ -7,6 +7,9 @@ const cp = require('./lib/cp')
 const yarnInstall = require('./lib/yarn-install')
 const linkNodeModules = require('./lib/link-node-modules')
 
+const lockfile = require('lockfile')
+const lock = Promise.promisify(lockfile.lock, { context: lockfile })
+const unlock = Promise.promisify(lockfile.unlock, { context: lockfile })
 const mkdirp = Promise.promisify(require('mkdirp'))
 const access = Promise.promisify(require('fs').access)
 
@@ -14,6 +17,13 @@ const cwd = process.cwd()
 const yarnPkgrCache = path.join(process.env.HOME, '.npm-pkgr')
 
 var cachedir
+var cachelock
+
+const lockopts = {
+  wait: 2 * 1000,
+  stale: 60 * 1000,
+  retries: 30
+}
 
 mkdirp(yarnPkgrCache)
 .then(() => {
@@ -22,7 +32,10 @@ mkdirp(yarnPkgrCache)
 .then(hash => {
   console.log(hash)
   cachedir = path.join(yarnPkgrCache, hash)
-  return mkdirp(cachedir)
+  cachelock = path.join(yarnPkgrCache, hash + '.lock')
+  return lock(cachelock, lockopts).then(() => {
+    return mkdirp(cachedir)
+  })
 })
 .then(dir => {
   if (dir === null) {
@@ -44,17 +57,21 @@ mkdirp(yarnPkgrCache)
     })
 })
 .then(yarnUsed => {
-  return linkNodeModules(cachedir, cwd).then(() => {
-    console.log('Packages installed')
-    if (!yarnUsed) {
-      console.log('using cache')
-    }
+  return unlock(cachelock).then(() => {
+    return linkNodeModules(cachedir, cwd).then(() => {
+      console.log('Packages installed')
+      if (!yarnUsed) {
+        console.log('using cache')
+      }
+    })
   })
 })
 .catch(e => {
-  require('rimraf').sync(cachedir)
-  console.error(e)
-  console.log()
-  console.error('An error occured while `yarn-pkgr` ran')
+  unlock(cachelock).then(() => {
+    require('rimraf').sync(cachedir)
+    console.error(e)
+    console.log()
+    console.error('An error occured while `yarn-pkgr` ran')
+  })
 })
 
