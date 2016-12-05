@@ -2,6 +2,10 @@
 const path = require('path')
 const Promise = require('bluebird')
 
+Promise.config({
+  cancellation: true
+})
+
 const computeHash = require('./lib/compute-hash')
 const cp = require('./lib/cp')
 const yarnInstall = require('./lib/yarn-install')
@@ -25,7 +29,9 @@ const lockopts = {
   retries: 30
 }
 
-mkdirp(yarnPkgrCache)
+const off = require('./lib/death')(cleanup)
+
+const p = mkdirp(yarnPkgrCache)
 .then(() => {
   return computeHash(cwd)
 })
@@ -65,12 +71,16 @@ mkdirp(yarnPkgrCache)
     })
   })
 })
-.catch(e => {
+.catch(cleanup)
+.finally(off)
+
+function cleanup (...args) {
+  p.cancel()
   unlock(cachelock).then(() => {
     require('rimraf').sync(cachedir)
-    console.error(e)
+    console.error(...args)
     console.log()
     console.error('An error occured while `yarn-pkgr` ran')
   })
-})
+}
 
